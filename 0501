@@ -1,0 +1,108 @@
+f = open('test01', 'r') #w쓰면 계속 없애고 쓰는거라서 a를 써야한다.
+lines = f.readlines()
+total_id = []
+for line in lines:
+    id, pwd = line.split(",")
+    total_id.append(id)
+f.close()
+
+f = open("test01", 'a')
+id = input("enter the id : ")
+pwd = input("end the pwd : ")
+
+if id not in total_id:
+    f.write('\n' + id + ',' + pwd)
+    f.close()
+
+#9번째 줄부터는 정상작동
+input_id = input("Enter id : ")
+input_pwd = input("Enter the pwd : ")
+
+def login_check(input_id, input_pwd):
+    f = open('test01','r')
+    lines = f.readlines()
+    flag = False
+    for line in lines:
+        temp = line.split('\n')[0]
+        id, pwd = temp.split(',')
+        print("id pwd", id, pwd)
+        if id == input_id and pwd == input_pwd:
+            flag = True
+            break
+    return flag
+
+flag = login_check(input_id, input_pwd)
+
+if flag:
+    print("success")
+    import random
+
+    def make_map():
+        game_map = []
+
+        for i in range(9):
+            game_map.append(" _ ")
+        return game_map
+
+    def print_map(nk_map):
+        print('-----------')
+        print(nk_map[0] + '|' + nk_map[1] + '|' + nk_map[2])
+        print('-----------')
+        print(nk_map[3] + '|' + nk_map[4] + '|' + nk_map[5])
+        print('-----------')
+        print(nk_map[6] + '|' + nk_map[7] + '|' + nk_map[8])
+        print('-----------')
+
+    def check_win(map):
+        check = False
+        if map[0] == map[1] == map[2] and map[0] != ' _ ':
+            check = True
+        elif map[3] == map[4] == map[5] and map[3] != ' _ ':
+            check = True
+        elif map[6] == map[7] == map[8] and map[6] != ' _ ':
+            check = True
+        elif map[1] == map[4] == map[7] and map[1] != ' _ ':
+            check = True
+        elif map[0] == map[3] == map[6] and map[0] != ' _ ':
+            check = True
+        elif map[2] == map[5] == map[8] and map[2] != ' _ ':
+            check = True
+        elif map[0] == map[4] == map[8] and map[0] != ' _ ':
+            check = True
+        elif map[2] == map[4] == map[6] and map[2] != ' _ ':
+            check = True
+        return check
+
+
+    a = ' O '
+    b = ' X '
+    turn = 0
+    game_map = make_map()
+
+    for i in range(9):
+        if turn == 0:
+            while True:
+                num = int(input("Enter the position : "))
+                if game_map[num] == " _ ":
+                    game_map[num] = a
+                    break
+            turn = 1
+        else:
+            while True:
+                num = random.randrange(0, 8)
+                if game_map[num] == " _ ":
+                    game_map[num] = b
+                    break
+            turn = 0
+        print("--------------------again")
+        print_map(game_map)
+
+        game_win_check = check_win(game_map)
+
+        if game_win_check:
+            print('win')
+            break
+        else:
+            print('draw')
+else:
+    print("fail")
