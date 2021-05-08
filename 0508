@@ -1,0 +1,37 @@
+"""
+a = [3, 0]
+len(a)
+
+del a[1]
+print(a)
+"""
+""
+def push(stack, data, max_length):
+
+    if len(stack) < max_length:
+        stack.append(data)
+        print(stack)
+    else:
+        print("over flow")
+
+    return stack
+
+stack = []
+
+def pop(stack):
+    pass
+
+max_length = 3
+stack = []
+
+while True:
+
+    que = input("Enter push or pop:")
+
+    if que == "push":
+        data = int(input("Enter you number : "))
+        stack = push(stack, data, max_length)
+
+    elif que == "pop":
+
+        pass
