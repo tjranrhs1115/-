@@ -1,0 +1,231 @@
+"""
+""
+
+# 101
+# bool
+
+# 102
+# False
+
+# 103
+# True
+
+# 104
+# True
+
+# 105
+# 3 == 3 True
+# 4 != 3 True
+# True and True
+# True
+
+# 106
+# 대소 비교 연산자가
+
+# 107
+# 출력 x
+
+# 108
+# hi, there
+
+# 109
+# 1
+# 2
+# 4
+
+# 110
+# 3
+# 5
+"""
+""
+
+# 111
+user = input()
+for i in range(10):
+    print(user, end='')
+print()
+"""
+"""
+
+i = 0
+while i < 10:
+    print(user, end='')
+    i += 1
+"""
+"""
+# 112
+n = int(input())
+print(n + 10)
+
+"""
+"""
+# 113
+n = int(input())
+if n % 2 == 0:
+    print('짝수')
+else:
+    print('홀수')
+"""
+"""
+# 114
+n = int(input())
+n += 20
+if n > 255:
+     n = 255
+print(n)
+
+# 115
+n = int(input())
+n -= 20
+if n > 255:
+    n = 255
+elif n < 0:
+    n = 0
+print(0)
+"""
+"""
+# 116
+t = input('현재시간:')
+m = t.splitd(":")[1]
+
+if m == "00":
+    print("정각이여")
+else:
+    ("정각이 아니여")
+"""
+"""
+# 117
+fruit = ["사과", "포도", "바나나"]
+f = input("좋아하는 과일은?")
+
+if f in fruit:
+    print("정답이여.")
+else:
+    print("오답이여")
+"""
+"""
+# 119
+fruit = {"봄": "딸기",
+         "여름" : "토마토",
+         "가을" : "사과"}
+keys = fruit.keys()
+f = input("제가 좋아하는 계절은?")
+if f in keys:
+    print("정답이여")
+else:
+    print("오답이여.")
+
+values = fruit.values
+f = input("좋아하는 과일은?")
+if f in values:
+    print("정답이여.")
+else:
+    print("오답이여.")
+"""
+"""
+# 121
+c = input()
+
+if c.islower():
+    c = c.upper()
+else:
+    c = c.lower()
+print(c)
+"""
+"""
+# 122
+score = input("score: ")
+
+if 81 < score <= 100:
+    print("A")
+elif 61 < score <= 80:
+    print("B")
+elif 41 < score <= 60:
+    print("C")
+elif 21 < score < 40:
+    print("D")
+elif 0 < score <= 20:
+    print("E")
+"""
+"""
+# 123
+money, name = input("입력: ")
+money = int(money)
+
+if name == "달러":
+    print(f"{money * 1167.0} 원")
+elif name == "엔":
+    print(f"{money * 10.96} 원")
+elif name == "유로":
+    print(f"{money * 1268.0} 원")
+elif name == "위안":
+    print(f"{money * 171.0} 원")
+"""
+"""
+
+# 124
+n1 = int(input("input number1: "))
+n2 = int(input("input number2: "))
+n3 = int(input("input number3: "))
+
+if n1 >= n2 and n1>= n3:
+    print(n1)
+elif n2 >= n1 and n2 >= n3:
+    print(n2)
+elif n3 >= n1 and n3 >= n2:
+    print(n3)
+"""
+"""
+# 125
+telecom = {"011":"skt",
+           "016":"kt",
+           "019":"lgu+",
+           "010":"알수없음"}
+phone = input("휴대전화 번호 입력: ")
+front_num = phone.split("-")[0]
+print(f"당신은 {telecom[front_num]} 사용자입니다.")
+"""
+"""
+# 126
+m = int(input("우편번호: ")[2])
+
+if 0 <= m <= 2:
+    print("강복구")
+elif 3 <= m <= 5:
+    print("도봉구")
+elif 6 <= m <= 9:
+    print("노원구")
+"""
+"""
+# 127
+gender = input("주민등록번호: ")[7]
+
+if gender in ("1", "3"):
+    print("남자")
+else:
+    print("여자")
+"""
+"""
+# 128
+location = input("주민등록번호: ")[8:10]
+
+if 0 <= location <= 8:
+    print("서울 입니다.")
++lse]
+{  print("서울이 아닙니다.")
+"""
+# 129
+pid = input("주민등록번호: ")
+i = 2
+s = 0
+for c in pid[:len(pid)-1]:
+    if not c.isdigit():
+        continue
+    s += i * int(c)
+    i += 1
+    if i == 10:
+        i = 2
+if 11- (s % 11) == int(pid[-1]):
+    print("유효한 비밀번호.")
+else:
+    print("유효하지 않음.")
