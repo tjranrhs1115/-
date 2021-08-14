@@ -1,0 +1,279 @@
+"""
+"""
+# #201
+# def print_coin():
+#     print("비트코인")
+#
+# #202
+# print_coin()
+#
+# #203
+# for i in range(100):
+#     print_coin()
+#
+# #204
+# def print_coins():
+#     for i in range(100):
+#         print("비트코인 아직 안하는 흑우 없제?")
+"""
+"""
+#206
+#a
+#b
+#c
+#a
+#b
+
+#207
+#A
+#C
+#B
+
+#208
+#A
+#C
+#B
+#E
+#D
+
+#209
+#B
+#A
+
+#210
+#B
+#C
+#B
+#C
+#B
+#C
+
+#211
+# 안녕
+# Hi
+
+#212
+# 7
+# 15
+
+#213
+#매개변수를 넘겨주지 않음
+
+#214
+#문자열 + 숫자는 성립이 안된다.
+"""
+"""
+
+# #215
+# def print_with_smile(text):
+#     print(text + ":D")
+#
+# #216
+# print_with_smile("안녕하세요")
+#
+# #217
+# def print_upper_price(price):
+#     print(price * 1.3)
+# """
+# """
+#
+# #218
+# def print_sum(a, b):
+#     print(a + b)
+#
+# #219
+# def print_aarithmetic_operation(a, b):
+#     print(f'{a} + {b} = {a + b}')
+#     print(f'{a} - {b} = {a + b}')
+#     print(f'{a} * {b} = {a + b}')
+#     print(f'{a} / {b} = {a + b}')
+#
+# print_aarithmetic_operation(3, 4)
+#
+# #220
+# def print_max(a, b, c):
+#     if a >= b and a >= c:
+#         print(a)
+#     elif b >= a and b >= c:
+#         print(b)
+#     else:
+#         print(c)
+#
+# """
+# """
+#
+# # 예시
+# def Sum(a, b):
+#     return a + b
+# r
+# = Sum(3, 4)
+#
+# print(r)
+
+""
+""
+#221
+# def print_reverse(text):    #에엑따! 함수다!
+#     #return text[::-1]
+#     #return.join(reversed(list(text)))
+#     result = ''           #에엑따! ''를 result에 대입한다!
+#     for c in text:        #에엑따!반복문이다!
+#         result = c + result     #에엑따! c + result를 result에 대1입한다!
+#     return result          #에엑따! 반환이다!
+#
+# print(print_reverse('python'))  #에엑따! 함수를 출력한다! 그것도 반대로!!!!!!!!!!!!!
+
+""
+"""
+#222
+def print_score(score_list):
+    return sum(score_list) / len(score_list)
+
+print(print_score([1, 2, 3]))
+"""
+"""
+#223
+def print_even(text):
+    result = []
+    for i in text:
+        if i % 2 == 0:
+            result.append(i)
+    return result
+
+r = print(print_even([1, 3, 2, 10, 11, 13, 15]))
+print(r)
+
+#224
+def print_keys(dictionary):
+    return list(dictionary.keys())
+
+r = print_keys({"이름":"홍길동", "나이":30, "성별":0})
+for i in r:
+    print(i)
+
+
+#226
+def print_5xn(string):
+    i = 0
+    for c in string:
+        if i % 5 == 0 and i != 0:
+            print()
+        print(c, end='')
+        i += 1
+
+print_5xn("아이엠어보이유얼어걸")
+
+#227
+def print_mxn(string, m):
+    i = 0
+    for c in string:
+        if i % m == 0 and i != 0:
+            print()
+            print(c, end='')
+            i += 1
+"""
+"""
+# 프로그래밍 패러다임 2가지
+#1.철차지향 -> C, Ruby, ...
+#2.객체지향 -> 파이썬, 자바, c++, ...
+#객체지향   class
+class Human:
+    def __init__(self, name, age, gender):
+        self.name = name
+        self.age = age
+        self.gender = gender
+        
+    def speech(self, text):
+        print(self.name, ":", text)
+        
+
+n1 = Human('홍길동', '20', '남자')
+n2 = Human('아무개', '23', '여자')
+
+n1.speech('안녕하세요')
+n2.speech('반갑습니다')
+"""
+"""
+class stock:
+    def __init(self, name, code):
+        self._name = name
+        self._code = code
+        
+    def set_name(self, name):
+        self._name = name
+    def set_name(self, code):
+        self._code = code
+
+a = stock(none, None)
+a.set_name('삼성전자')
+a.set_code("285791')
+print(a.set_name('삼성전자'))
+print(a.set_code("285791'))
+"""
+""
+#271
+import random
+
+
+class Account:
+    count = 0
+
+    def __init__(self, name, money):
+        self.name = name
+        self.money = money
+        self.bank = 'SC은행'
+        self.deposit_count = 0
+        self.d_history = []
+        self.w_history = []
+
+        first = str(random.randint(0, 999)).rjust(3, '0')
+        middle = str(random.randint(0, 99)).rjust(2, '0')
+        last = str(random.randint(0, 99999999999)).rjust(6, '0')
+        self.acc = f'{first}-{middle}-{last}'
+        Account.count += 1
+
+    @classmethod
+    def get_account_num(cls):
+        print(cls.count)
+
+    def deposit(self, money):
+        if money >= 1:
+            self.money += money
+            self.deposit_count += 1
+            if self.deposit_count % 5 == 0:
+                self.money += self.money * 0.01
+            self.d_history.append('입금:' + str(money)
+                                  +", 잔고:" + str(self.money))
+
+    def withdraw(self, money):
+        if self.money < money:
+            self.money -= money
+            self.d_history.append('출금:' + str(money)
+                                  +", 잔고:" + str(self.money))
+
+    def deposit_history(self):
+        for history in self.d_history:
+            print(history)
+
+    def withdraw_history(self):
+        for history in self.w_history:
+            print(history)
+
+    def display_info(self):
+        print("은행이름: ",self.bank)
+        print("예금주: ",self.name)
+        print("계좌번호: ",self.acc)
+        """
+        s = str(self.money)
+        s = s[::-1]
+        s = [s[i:i+3] for i in range(0, len(s), 3)]
+        s = ','.join(s)
+        s = s[::-1]
+        print('잔고:', s)
+        """
+
+        print(f'잔고: {self.money :,}')
+
+Account_list = [Account('헝길동', 100),
+                Account('아무개', 200),
+                Account('이순신', 300000000)]
