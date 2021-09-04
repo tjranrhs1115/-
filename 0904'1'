@@ -1,0 +1,105 @@
+"""
+텍스트 뱀 게임의 동작에 관한 코드를 작성
+"""
+from drawer import Drawer
+from game_object import Snake, Food, Wall
+import keyboard      # 모듈 설치를 위해 Alt + Enter를 누르고 설치를 누름
+import random
+import time
+import os
+
+os.system('cls')
+drawer = Drawer()
+drawer.set_cursor_visible(False)
+
+class GameManager:
+    def __init__(self, size):
+        self.size = size
+
+        self.walls = []
+        for x in range(self.size):
+            for y in range(self.size):
+                if 1 <= x <= (self.size-2) and 1 <= y <= (self.size-2):
+                    continue
+                self.walls.append(Wall(x, y, '■'))
+
+        self.snake = Snake(size//2, size//2)
+
+        self.food = self.summon_food()
+        self.is_run = False
+
+    def summon_food(self):
+        new_food = None
+        while True:
+
+            x = random.randint(0, self.size-1)
+            y = random.randint(1, self.size-2)
+
+            new_food = Food(x, y, '●')
+
+            collide = False
+
+
+            collide = new_food.collision(self.snake)
+            for b in self.snake.body:
+                collide = new_food.collision(b)
+                if collide:
+                    break
+
+            if collide is not True:
+                break
+
+        return new_food
+
+    def draw_all(self):
+        drawer.clear(self.size)
+        self.snake.draw(drawer)
+        self.food.draw(drawer)
+        for w in self.walls:
+            w.draw(drawer)
+
+    def check(self):
+
+        self.snake.move()
+        for w in self.walls:
+            if w.collision(self.snake):
+                self.is_run = False
+
+        for b in self.snake.body:
+            if b.collision(self.snake):
+                self.is_run = False
+
+        if self.snake.collision(self.food):
+            self.food = self.summon_food()
+            self.snake.grow()
+
+    def control(self):
+        if keyboard.is_pressed('right'):
+            self.snake.command(Snake.D_RIGHT)
+        if keyboard.is_pressed('left'):
+            self.snake.command(Snake.D_LEFT)
+        if keyboard.is_pressed('DOWN'):
+            self.snake.command(Snake.D_DOWN)
+        if keyboard.is_pressed('up'):
+            self.snake.command(Snake.D_UP)
+
+    def run(self):
+        p_clock = 0
+        c_clock = 0
+        interval = 0
+
+        self.is_run = True
+        while self.is_run:
+            p_clock = c_clock
+            c_clock = time.time()
+            interval += c_clock - p_clock
+
+            if interval >= 0.25:
+                interval = 0
+                self.draw_all()
+                self.check()
+
+            self.control()
+
+g = GameManager(21)
+g.run()
