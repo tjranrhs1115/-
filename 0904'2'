@@ -1,0 +1,79 @@
+class Gameobject:
+    def __init__(self, x, y, char):
+        self.x = x
+        self.y = y
+        self.char = char
+
+    def collision(self,other):
+        return other.x == self.x and other.y == self.y
+
+    def draw(self,drawer):
+        drawer.print_at(self.x, self.y, self.char)
+
+
+class Wall(Gameobject):
+    pass
+
+class Food(Gameobject):
+    pass
+
+class Snake(Gameobject):
+    D_RIGHT = (1,0)
+    D_LEFT = (-1, 0)
+    D_UP = (0, -1)
+    D_DOWN = (0, 1)
+
+    def __init__(self, x, y):
+        super().__init__(x, y, '■')
+        self.body = [Gameobject(x, y + 1, '□'),
+                     Gameobject(x, y + 2, '□'),
+                     Gameobject(x, y + 3, '□')]
+
+        self.next_d = Snake.D_UP
+        self.curr_d = Snake.D_UP
+
+    def grow(self):
+        self.body.append(Gameobject(self.body[-1].x, self.body[-1].y, '□'))
+
+    def move(self):
+        for i in range(len(self.body) - 1, 0, -1):
+            self.body[i].x = self.body[i - 1].x
+            self.body[i].y = self.body[i - 1].y
+        self.body[0].x = self.x
+        self.body[0].y = self.y
+
+        self.x += self.next_d[0]
+        self.y += self.next_d[1]
+
+        self.curr_d = self.next_d
+
+    def command(self, direction):
+        if self.curr_d == Snake.D_RIGHT and direction == Snake.D_LEFT:
+            return
+        elif self.curr_d == Snake.D_LEFT and direction == Snake.D_RIGHT:
+            return
+        elif self.curr_d == Snake.D_UP and direction == Snake.D_DOWN:
+            return
+        elif self.curr_d == Snake.D_DOWN and direction == Snake.D_UP:
+            return
+        else:
+            self.next_d = direction
+
+    def draw(self, drawer):
+
+        super().draw(drawer)
+
+        for b in self.body:
+            b.draw(drawer)
+
+if __name__ == '__main__':
+    import time
+    import drawing
+    snake = Snake(30, 30)
+    drawer = drawing.Drawer()
+
+    while True:
+        drawer.clear(100)
+        snake.move()
+        snake.draw(drawer)
+        time.sleep(0.5)
