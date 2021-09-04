@@ -1,0 +1,38 @@
+import ctypes
+import sys
+
+class COORD(ctypes.Structure):
+    _fields_ = [("x", ctypes.c_short), ("y", ctypes.c_short)]
+
+class CURSORINFO(ctypes.Structure):
+    _fields_ = [("size", ctypes.c_int), ("visible", ctypes.c_byte)]
+
+class Drawer:
+    def __init__(self):
+        self.o_handle = ctypes.windll.kernel32.GetStdHandle(-11)
+
+    def set_cursor_visible(self, visible):
+        cursor_info = CURSORINFO()
+        ctypes.windll.kernel32.GetConsoleCursorInfo(self.o_handle,ctypes.byref(cursor_info))
+        cursor_info.visible = visible
+        ctypes.windll.kernel32.GetConsoleCursorInfo(self.o_handle, ctypes.byref(cursor_info))
+
+    def print_at(self, x, y, string):
+        cursor_pos = COORD(x*2, y)
+        ctypes.windll.kernel32.SetConsoleCursorPosition(self.o_handle, cursor_pos)
+        sys.stdout.write(string)
+        sys.stdout.flush()
+
+    def clear(self, size):
+        cursor_pos = COORD(0, 0)
+        ctypes.windll.kernel32.SetConsoleCursorPosition(self.o_handle, cursor_pos)
+        sys.stdout.write((('  ' * size) + '\n') * size)
+        sys.stdout.flush()
+
+
+if __name__ == '__main__':
+    drawer = Drawer()
+    drawer.set_cursor_visible(False)
+    drawer.clear(100)
+    drawer.print_at(3, 0, 'A')
+    drawer.print_at(3, 5, 'B')
