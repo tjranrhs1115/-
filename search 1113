@@ -1,0 +1,25 @@
+from flask import Flask, render_template, request, rediret, url_for
+# BeautifulSoup 모듈 (왭페이지 크롤링 모듈)
+#from bs4 import BeautifulSoup
+import requests as rq
+
+#Flask 인스턴스 생성
+app = Flask(__name__)
+
+@app.route("/")
+def search():
+    return render_template('search.html')
+
+@app.route("/search", methods=('GET',))
+def get_search_count():
+    global count
+    search_text = request.args.get("text")
+    url = f"https://www.google.com/search?q={search_text}"
+    res = rq.get(url)
+
+    return res.text
+
+
+if __name__ == '__main__':
+    # 서버 실행
+    app.run()
