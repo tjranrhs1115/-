@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>검색 결과 갯수</title>
+</head>
+<body>
+    <h1>검색결과: {{count}} 개</h1>
+    <form action="/search"method="get">
+        <input type="text" name="text">
+        <input type="submit" value="검색">
+    </form>
+</body>
+</html>
