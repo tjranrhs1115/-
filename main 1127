@@ -1,0 +1,106 @@
+# Flask 모듈
+from flask import Flask, render_template, request, redirect, url_for
+import sqlite3
+import datetime
+
+# DB 커넥션 객체 생성
+def create_table():
+    conn = sqlite3.connect("post.db")
+    # DB 접근 커서 인스턴스 생성
+    cur = conn.cursor()
+
+    # 데이터베이스에 SQL 문으로 요청
+    cur.execute(
+        """
+        CREATE TABLE post(
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            author TEXT,
+            content TEXT,
+            date TEXT,
+            view INTEGER
+        )
+        """
+    )
+    # DB에 결과 반영 요청
+    conn.commit()
+    conn.close()
+
+def insert(title, author, content):
+    conn = sqlite3.connect("post.db")
+    cur = conn.cursor()
+    # 데이터 삽입 요청
+    cur.execute(
+        "INSERT INTO post VALUES(?,?,?,?,?,?)",
+        (0, title, author, content, str(datetime.date.today()), 0)
+    )
+    conn.commit()
+    conn.close()
+    
+def select():
+    conn = sqlite3.connect("post.db")
+    cur = conn.cursor()
+    # 데이터 조회 요청
+    cur.execute("SELECT * FROM post")
+    rows = cur.fetchall()
+    conn.close()
+    return rows
+
+def select_one(id):
+    conn = sqlite3.connect("post.db")
+    cur = conn.cursor()
+    # post 테이블에서 id 값에 해당하는 열 가져오기
+    cur.excute("SELECT * FROM post WHERE id=?", (id,))
+    row = cur.frtchone()
+    conn.close()
+    return row
+
+def update_view(id, count):
+    conn = sqlite3.connect("post.db")
+    cur = conn.cursor()
+    # post 테이블에서 id 값에 해당하는
+    cur.execute("UPDATE post SET view=? WHERE id=?", (count, id))
+    conn.commit()
+    conn.close()
+
+# Flask 인스턴스 생성
+app = Flask(__name__)
+
+
+try:
+    create_table()
+except Exception:
+    pass
+
+# 라우터 설정(경로 설정)
+# @ 표시는 데코레이터라고 하고, 미리 만들어진 메소드의 기능을 불러오는 역할
+@app.route("/")
+def index():
+    posts = select()
+    return render_template('post.html', posts=posts)
+
+@app.route("/write")
+def write():
+    return render_template('write.html')
+
+@app.route("/do-write", methods=("POST",))
+def do_write():
+    title = request.request.from["title"]
+    author = request.form["author"]
+    content = request.form["content"]
+    insert(title, author, content)
+    return redirect("/")
+
+@app.route("/read/<id>")
+def read(id):
+    row = list(select_one(id))
+    row[5] += 1
+    update_view(id, row[5])
+    return render_template('read.html', post=row)
+
+
+if __name__ == '__main__':
+    # 서버 실행
+    app.run()
+
+
