@@ -1,0 +1,41 @@
+import sqlite3
+import datetime
+
+def create_table(conn):
+    # DB 접근 커서 인스턴스 생성
+    cur = conn.cursor()
+
+    # 데이터베이스에 SQL 문으로 요청
+    cur.execute(
+        """
+        CREATE TABLE post(
+            id INTEGER,
+            title TEXT,
+            author TEXT,
+            content TEXT,
+            date TEXT,
+            view INTEGER
+        )
+        """
+    )
+    # DB에 결과 반영 요청
+    conn.commit()
+
+def insert(conn, title, author, content):
+    cur = conn.cursor()
+    # 데이터 삽입 요청
+    cur.execute(
+        "INSERT INTO post VALUES(?,?,?,?,?,?)",
+        (0, title, author, content, str(datetime.date.today()), 0)
+    )
+    conn.commit()
+
+def select(conn):
+    cur = conn.cursor()
+    # 데이터 조회 요청
+    cur.execute("SELECT * FROM post")
+    rows = cur.fetchall()
+    return rows
+
+
+
