@@ -1,0 +1,48 @@
+#Queue
+class Element:
+
+    def __init__(self, value, link):
+        self.value = value
+        self.link = link
+
+class Queue:
+    def __init__(self):
+        self.rear = None
+        self.front = None
+
+    def enqueue(self, value):
+        if self.rear == None and self.front == None:
+            elem = Element(value, None)
+            self.rear = elem
+            self.front = elem
+        else:
+            elem = Element(value, None)
+            self.rear.link = elem
+            self.front = elem
+
+
+    # 데이터 출력 - front에서 데이터를 꺼낸다.
+    def dequeue(self):
+        if self.front is None:
+            return None
+        else:
+            elem = self.front
+            self.front = self.front.link
+            return elem.value
+
+    def reserve(self):
+        prev = none
+        curr = self.front
+        while curr:
+            next = curr.link
+            curr.link = prev
+            prev = curr
+            curr = next
+        self.rear, self.front = self.front, self.rear
+
+q = Queue()
+for i in range(10):
+    q.enqueue(i)
+
+for i in range(10):
+    print(q.dequeue())
